@@ -1,0 +1,90 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:places/models/location.dart';
+import 'package:places/provider/locationProvider.dart';
+
+class AddPlaceScreen extends ConsumerStatefulWidget {
+  const AddPlaceScreen({super.key});
+
+  @override
+  ConsumerState<AddPlaceScreen> createState() {
+    return _AddPlaceScreenState();
+  }
+}
+
+class _AddPlaceScreenState extends ConsumerState<AddPlaceScreen> {
+  final _titleController = TextEditingController();
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+          title: Text(
+        'Add new Place',
+        style: Theme.of(context).textTheme.titleMedium,
+      )),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            TextField(
+              maxLength: 30,
+              controller: _titleController,
+              keyboardType: TextInputType.streetAddress,
+              style: TextStyle(color: Theme.of(context).colorScheme.primary),
+              decoration: InputDecoration(
+                  label: Text(
+                'Title',
+                style: Theme.of(context)
+                    .textTheme
+                    .titleSmall!
+                    .copyWith(color: Theme.of(context).colorScheme.primary),
+              )),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Container(
+              alignment: Alignment.center,
+              width: 150,
+              child: ElevatedButton(
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).clearSnackBars();
+                    if (_titleController.text.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Please Add Location')));
+                      return;
+                    }
+                    ref.watch(locationProvider.notifier).addLocation(Location(
+                        id: DateTime.now().toString(),
+                        place: _titleController.text));
+
+                    Navigator.of(context).pop();
+                  },
+                  child: const Row(
+                    children: [
+                      Icon(Icons.add),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        'Add Place',
+                        textAlign: TextAlign.center,
+                      )
+                    ],
+                  )),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
