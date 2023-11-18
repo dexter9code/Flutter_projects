@@ -35,6 +35,15 @@ class PlacesScreen extends ConsumerWidget {
               },
               key: ValueKey(loadedItems[index].id),
               child: ListTile(
+                leading: CircleAvatar(
+                  backgroundImage: FileImage(loadedItems[index].image),
+                  radius: 26,
+                ),
+                trailing: Text(
+                  loadedItems[index].location.address,
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      color: Theme.of(context).colorScheme.onBackground),
+                ),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (ctx) => PlaceDetailScreen(
