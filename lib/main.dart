@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:toon/screens/login.dart';
+import 'package:toon/screens/login_screen.dart';
 
 final colorScheme = ColorScheme.fromSeed(
     seedColor: const Color.fromARGB(255, 69, 74, 222),
@@ -29,7 +30,7 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'Toon',
       theme: theme,
-      home: const LoginScreen(),
+      home: const MyLoginScreen(),
     );
   }
 }
