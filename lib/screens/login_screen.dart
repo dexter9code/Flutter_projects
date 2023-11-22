@@ -11,6 +11,9 @@ class MyLoginScreen extends StatefulWidget {
 class _MyLoginScreenState extends State<MyLoginScreen> {
   final String bubbleSvg = 'assets/svg/bubbles.svg';
 
+  var _userName = TextEditingController();
+  var _password = TextEditingController();
+
   void onLoginPressHandler() {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -80,9 +83,14 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                 ),
                 Positioned(
                   top: 5,
-                  child: Icon(
-                    Icons.close_rounded,
-                    color: Colors.white,
+                  child: InkWell(
+                    onTap: () {
+                      ScaffoldMessenger.of(context).clearSnackBars();
+                    },
+                    child: Icon(
+                      Icons.close_rounded,
+                      color: Colors.white,
+                    ),
                   ),
                 )
               ],
@@ -156,6 +164,8 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 15),
                   child: TextField(
                     keyboardType: TextInputType.emailAddress,
+                    controller: _userName,
+                    style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                         hintText: 'Enter Username',
                         hintStyle: TextStyle(
@@ -181,6 +191,9 @@ class _MyLoginScreenState extends State<MyLoginScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 15),
                   child: TextField(
                     keyboardType: TextInputType.emailAddress,
+                    controller: _password,
+                    style: TextStyle(color: Colors.white),
+                    obscureText: true,
                     decoration: InputDecoration(
                         hintText: 'Password',
                         hintStyle: TextStyle(
